@@ -7,7 +7,7 @@ import firebase from '../firebase';
 
 let db = firebase.firestore();
 
-export default function Register () {
+export default function AccountPage () {
 
     const formik = useFormik({
         initialValues: {
@@ -40,6 +40,10 @@ export default function Register () {
           }
         });
 
+    function handleFirstnameChange () {
+        console.log(formik.values.firstName);
+    }
+
     return (
         <div className="App">
             <h1>Registration</h1>
@@ -53,6 +57,7 @@ export default function Register () {
                         name="firstName"
                         value={formik.values.firstName}
                         onChange={formik.handleChange}
+                        onBlur={handleFirstnameChange}
                     />
                     {formik.errors.firstName && formik.touched.firstName && (
                         <p>{formik.errors.firstName}</p>
