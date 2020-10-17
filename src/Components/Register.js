@@ -1,13 +1,115 @@
-import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
+import React from 'react';
 
-export default function Register() {
-    const [name, setName] = useState('');
-    const [location, setLocation] = useState('');
+import { useFormik } from 'formik';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import * as Yup from 'yup';
+import firebase from '../firebase';
+
+let db = firebase.firestore();
+
+export default function Register () {
+
+    const formik = useFormik({
+        initialValues: {
+            firstName: '',
+            lastName: '',
+            email: '',
+            location: '',
+        },
+        validationSchema: Yup.object({
+            firstName: Yup.string()
+              .min(2, "Mininum 2 characters")
+              .max(20, "Maximum 15 characters")
+              .required("Required!"),
+            lastName: Yup.string()
+              .min(2, "Mininum 2 characters")
+              .max(20, "Maximum 15 characters")
+              .required("Required!"),
+            email: Yup.string()
+              .email("Invalid email format")
+              .required("Required!"),
+            location: Yup.string()
+              .min(2, "Minimum 2 characters")
+              .required("Required!"),
+          }),
+        onSubmit: values => {
+            console.log(values)
+            db.collection("user-tests").doc().set(
+                values
+            )
+          }
+        });
 
     return (
-        <Button variant="contained" color="primary">
-            Submit
-        </Button>
-    )
+        <div className="App">
+            <h1>Registration</h1>
+
+            <form onSubmit={formik.handleSubmit}>
+                <div>
+                    <TextField
+                        label='First Name'
+                        variant='outlined'
+                        type="text"
+                        name="firstName"
+                        value={formik.values.firstName}
+                        onChange={formik.handleChange}
+                    />
+                    {formik.errors.firstName && formik.touched.firstName && (
+                        <p>{formik.errors.firstName}</p>
+                    )}
+                </div>
+                <br/>
+
+                <div>
+                    <TextField
+                        label='Last Name'
+                        variant='outlined'
+                        type="text"
+                        name="lastName"
+                        value={formik.values.lastName}
+                        onChange={formik.handleChange}
+                    />
+                    {formik.errors.lastName && formik.touched.lastName && (
+                        <p>{formik.errors.lastName}</p>
+                    )}
+                </div>
+                <br/>
+
+                <div>
+                    <TextField
+                        label="Email"
+                        variant='outlined'
+                        type="email"
+                        name="email"
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                    />
+                    {formik.errors.email && formik.touched.email && (
+                        <p>{formik.errors.email}</p>
+                    )}
+                </div>
+                <br/>
+
+                <div>
+                    <TextField
+                        label='Location'
+                        variant='outlined'
+                        type="text"
+                        name="location"
+                        value={formik.values.location}
+                        onChange={formik.handleChange}
+                    />
+                    {formik.errors.location && formik.touched.location && (
+                        <p>{formik.errors.location}</p>
+                    )}
+                </div>
+                <br/>
+
+                <div>
+                    <Button type="submit" variant='contained' color='primary'>Submit</Button>
+                </div>
+            </form>
+        </div>
+      );
 }
