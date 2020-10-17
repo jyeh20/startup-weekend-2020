@@ -1,10 +1,10 @@
 import React from 'react'
-import Register from '../Components/Register'
 
 function Dashboard(){
     return (
         <div>
-            <Register />
+            <h1>About DwellN</h1>
+            <h4></h4>
         </div>    
     )
 }
