@@ -15,7 +15,7 @@ function Navbar(){
                     <ul>
                             {AccountMenuItem.map((account,index) => {
                                 return(
-                                <li key={index}><Link>{account.title}</Link></li>
+                                <li key={index}><Link to={account.path}>{account.title}</Link></li>
                                 )
                             })}
     

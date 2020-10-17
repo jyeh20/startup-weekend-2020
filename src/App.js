@@ -18,7 +18,7 @@ function App() {
       </Switch>
     </Router>
     <Footer />
-        <AccountPage />
+        {/* <AccountPage /> */}
     </div>
   );
 }
