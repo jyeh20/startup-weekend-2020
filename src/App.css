@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  overflow: hidden;
 }
 
 .App-logo {
@@ -7,11 +8,29 @@
   pointer-events: none;
 }
 
+.App-body{
+  /* display: flex;
+  flex-direction: column;
+  margin-top: 6rem; */
+  width: 100%;
+}
+label{
+  font-size: 25px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Kumbh Sans', sans-serif;
+  scroll-behavior: smooth;
+} 
 
 .App-header {
   background-color: #282c34;

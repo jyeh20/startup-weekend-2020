@@ -1,0 +1,199 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
+  }
+
+  nav{
+    background: #f7bf6a;
+    position: sticky;
+    z-index: 999;
+    top: 0;
+    height: 80px;
+    width: 100% ;
+  }
+  
+  .logo{
+    font-size: 27px;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 47.4%;
+    top: 30%;
+    color: black;
+    font-weight: bold;
+    text-decoration: none;
+}
+  
+  nav::after{
+    content: '';
+    clear: both;
+    display: table;
+  }
+
+  nav ul{
+    margin: auto;
+    list-style: none;
+    text-align: left;
+    margin-left: 3rem;
+  }
+ 
+  nav ul li{
+    float: none;
+    /* background: #1b1b1b; */
+    margin: 0 15px;
+   display: inline-block;
+   cursor: pointer;
+  }
+  nav ul li a{
+    color: black;
+    text-decoration: none;
+    line-height: 70px;
+    font-size: 18px;
+    padding: 8px 15px;
+  }
+  
+  nav ul li a:hover{
+    color:black;
+    border-radius: 5px;
+    box-shadow: 0 0 5px black,0 0 5px black;
+    transition: all 0.3s ease-out;
+  }
+  
+  nav ul ul{
+    position: absolute;
+    top: 90px;
+    opacity: 0;
+    visibility: hidden;
+    transition: top .3s;
+    border-top:  3px solid black;
+    /* width: auto; */
+  }
+  
+  nav ul li:hover > ul{
+    top:80px;
+    opacity: 1;
+    visibility: visible;
+    margin-left: 0px;
+  }
+  
+  nav ul ul li{
+    position: relative;
+    margin: 0px;
+    width: 200px;
+    float: none;
+    display: list-item;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
+  }
+  nav ul ul li a{
+    line-height: 50px;
+  }
+  nav ul li li a:hover{
+    color: black;
+    box-shadow: none;
+  }  
+  .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .show, .navbarcb,.icon{
+    display: none;
+  }
+  /* nav ul li:nth-child(5){float: right;} */
+  .cart{
+      float: right;
+      padding-right: 25px;
+  }
+  .account{
+    float: right;
+    padding-right: 50px;
+  }
+
+  
+  @media all and (max-width: 968px){
+    nav ul{
+        position: absolute;
+        top: 80px;
+        left: 0;
+        flex-direction: column;
+        width: 100%;
+        margin-left: 0;
+    }
+  
+    .logo{
+      position: absolute;
+      width: 100%;
+    }
+  
+    nav ul li,nav ul ul li{
+      display: relative;
+      width: 100%;
+    }
+    nav ul ul{
+      top: 70px;
+      position: static;
+      border-top: none;
+      float: none;
+      display: none;
+      opacity: 1;
+      visibility: visible;
+    }
+    nav ul ul li{
+      border-bottom: 0px;
+    }
+    nav ul ul a{
+      padding-left: 40px;
+    }
+    .show{
+      display: block ;
+      color: white;
+      font-size: 18px;
+      padding: 0 20px;
+      line-height: 70px;
+      cursor: pointer;
+    }
+    .show:hover{
+      color: black;
+    }
+    nav ul li a:hover{
+      box-shadow: none;
+    }
+    .icon{
+      display: block;
+      color: white;
+      position: absolute;
+      left: 40px;
+      line-height: 70px;
+      font-size: 25px;
+      cursor: pointer;
+    }
+    .show + a, ul{
+      display: none;
+    }
+    [id^=btn]:checked + ul{
+      display: block;
+      z-index: 1;
+      -webkit-transition: all 0.50s;
+      -moz-transition: all 0.50s;
+      -o-transition: all 0.50s;
+       transition: all 0.50s;
+    }
+  }
+  
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
