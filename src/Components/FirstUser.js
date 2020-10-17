@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useFormik } from 'formik';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -7,65 +7,25 @@ import firebase from '../firebase';
 
 let db = firebase.firestore();
 
-export default function AccountPage () {
-
-    // Reference to unique Accounts
-    const identifier = window.location.pathname.slice(1);
-    let docRef = db.collection('user-tests').doc("WABWG");
-
-    // temporary variables
-    let tempFirstName = null;
-    let tempLastName = null;
-    let tempSmoking = null;
-    let tempDrinking = null;
-    let tempNoise = null;
-    let tempCar = null;
-    let tempCleanliness = null;
-    let tempCook = null;
-    let tempDrugs = null;
-    let tempPeopleOver = null;
-    let tempClothes = null;
-    let tempUtilities = null;
-
-    useEffect(() => (
-        docRef.get().then(function(doc) {
-            if (doc.exists) {
-                tempFirstName = doc.data().firstName;
-                console.log(tempFirstName)
-                tempLastName = doc.data().lastName;
-                tempSmoking = doc.data().smoking;
-                tempDrinking = doc.data().drinking;
-                tempNoise =  doc.data().noise;
-                tempCar = doc.data().car;
-                tempCleanliness = doc.data().cleanliness;
-                tempCook = doc.data().cook;
-                tempDrugs = doc.data().drugs;
-                tempPeopleOver = doc.data().people_over;
-                tempClothes = doc.data().clothes;
-                tempUtilities = doc.data().utilities;
-            }
-            else {
-                console.log("No such doc");
-            }
-    }).catch(function(error) {
-        console.log("Error", error);
-    })),
-    [])
+export default function FirstUser () {
 
     const formik = useFormik({
         initialValues: {
-            firstName: tempFirstName,
-            lastName: tempLastName,
-            smoking: tempSmoking,
-            drinking: tempDrinking,
-            noise: tempNoise,
-            car: tempCar,
-            cleanliness: tempCleanliness,
-            cook: tempCook,
-            drugs: tempDrugs,
-            people_over: tempPeopleOver,
-            clothes: tempClothes,
-            utilities: tempUtilities,
+            firstName: '',
+            lastName: '',
+            email: '',
+            location: '',
+            ID: newID(),
+            smoking: null,
+            drinking: null,
+            noise: null,
+            car: null,
+            cleanliness: null,
+            cook: null,
+            drugs: null,
+            people_over: null,
+            clothes: null,
+            utilities: null
         },
         validationSchema: Yup.object({
             firstName: Yup.string()
@@ -85,25 +45,29 @@ export default function AccountPage () {
           }),
         onSubmit: values => {
             console.log(values)
-            db.collection("user-tests").doc(identifier).update(
+            db.collection("user-tests").doc(formik.values.ID).set(
                 values
             )
           }
         });
 
-
-    // get User ID from firebase
-
+    // new ID for searching to make editing easier
+    function newID() {
+        const db = firebase.database();
+        let ref = db.ref("events");
+        let newPostRef = ref.push();
+        let newID = newPostRef.key.slice(9, 14);
+        return newID;
+        }
 
     // handlers
     function handleFirstnameChange () {
-        db.collection('users-tests').doc(identifier)
+        db.collection('users-tests').doc()
     }
 
-    console.log(formik.values)
     return (
         <div className="App">
-            <h1>{formik.values.firstName}</h1>
+            <h1>Registration</h1>
 
             <form onSubmit={formik.handleSubmit}>
                 <div>

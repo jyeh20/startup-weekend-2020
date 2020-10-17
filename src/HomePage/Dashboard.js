@@ -1,11 +1,11 @@
 import React from 'react'
-import Register from '../Components/Register'
+import FirstUser from '../Components/FirstUser'
 
 function Dashboard(){
     return (
         <div>
-            <Register />
-        </div>    
+            <FirstUser />
+        </div>
     )
 }
 export default Dashboard
