@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Register from './Components/Register';
+import AccountPage from './Components/AccountPage';
 import {
     BrowserRouter as Router,
     Switch,
@@ -10,7 +10,7 @@ import {
 function App() {
   return (
     <div className="App">
-        <Register />
+        <AccountPage />
     </div>
   );
 }
