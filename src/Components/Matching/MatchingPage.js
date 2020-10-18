@@ -1,10 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Container, Col, Row } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Card from './UserCards';
+import Dislike from './Dislike';
+import Like from './Like';
 
 export default function MatchingPage () {
 
-    const [items, setItems] = useState([]);
-
     return (
-        <h1>Hello World</h1>
+        <Container>
+            <Row className="justify-content-md-center">
+                <Col md="auto">
+                    <Card />
+                </Col>
+            </Row>
+            <br/>
+            <Row>
+                <Col>
+                    <Dislike />
+                </Col>
+                <Col>
+                    <Like />
+                </Col>
+            </Row>
+        </Container>
     )
 }

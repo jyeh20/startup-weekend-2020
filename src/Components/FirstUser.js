@@ -16,6 +16,7 @@ export default function FirstUser () {
             email: '',
             location: '',
             ID: newID(),
+            bio: '',
             // Details per person
             smoking: null,
             drinking: null,
@@ -26,8 +27,9 @@ export default function FirstUser () {
             drugs: null,
             peopleOver: null,
             clothes: null,
-            utilities: null
+            utilities: null,
             // Preferences
+            smokingPref: null,
         },
         validationSchema: Yup.object({
             firstName: Yup.string()
@@ -64,13 +66,11 @@ export default function FirstUser () {
 
     // handlers
     function handleFirstnameChange () {
-        db.collection('users-tests').doc()
+        db.collection('user-tests').doc()
     }
 
     return (
         <div className="App">
-            <h1>Registration</h1>
-
             <form onSubmit={formik.handleSubmit}>
                 <div>
                     <TextField

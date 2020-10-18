@@ -7,6 +7,7 @@ import FirstUser from './Components/FirstUser';
 import Dashboard from './HomePage/Dashboard';
 import Navbar from './HomePage/Navbar';
 import Footer from './HomePage/Footer';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
@@ -20,7 +21,6 @@ function App() {
       </Switch>
     </Router>
     <Footer />
-        {/* <AccountPage /> */}
     </div>
   );
 }

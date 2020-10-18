@@ -1,185 +1,103 @@
-import React, { useEffect } from 'react';
-import { useFormik } from 'formik';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import * as Yup from 'yup';
+import React, { useEffect, useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Slider from '@material-ui/core/Slider';
 import firebase from '../firebase';
 
 let db = firebase.firestore();
 
 export default function AccountPage () {
+    // fetches ID from pathname
+    const identifier = window.location.pathname.slice(9);
+    const docRef = db.collection('user-tests').doc(identifier);
 
-    // Reference to unique Accounts
-    const identifier = window.location.pathname.slice(1);
-    let docRef = db.collection('user-tests').doc("WABWG");
-
-    // temporary variables
-    let tempFirstName = null;
-    let tempLastName = null;
-    let tempSmoking = null;
-    let tempDrinking = null;
-    let tempNoise = null;
-    let tempParkingSpot = null;
-    let tempCleanliness = null;
-    let tempCook = null;
-    let tempDrugs = null;
-    let tempPeopleOver = null;
-    let tempClothes = null;
-    let tempUtilities = null;
-
-    useEffect(() => (
-        docRef.get().then(function(doc) {
-            if (doc.exists) {
-                tempFirstName = doc.data().firstName;
-                console.log(tempFirstName)
-                tempLastName = doc.data().lastName;
-                tempSmoking = doc.data().smoking;
-                tempDrinking = doc.data().drinking;
-                tempNoise =  doc.data().noise;
-                tempParkingSpot = doc.data().parkingSpot;
-                tempCleanliness = doc.data().cleanliness;
-                tempCook = doc.data().cook;
-                tempDrugs = doc.data().drugs;
-                tempPeopleOver = doc.data().people_over;
-                tempClothes = doc.data().clothes;
-                tempUtilities = doc.data().utilities;
-            }
-            else {
-                console.log("No such doc");
-            }
-    }).catch(function(error) {
-        console.log("Error", error);
-    })),
-    [])
-
-    const formik = useFormik({
-        initialValues:
-        {
-            firstName: docRef.get().then(function(doc) {
-                if(doc.exists) {
-                    return doc.data().firstName
-                } else {
-                    console.log("error")
-                }
-            }).catch(function(error) {
-                console.log("error", error);
-            }),
-            lastName: tempLastName,
-            smoking: tempSmoking,
-            drinking: tempDrinking,
-            noise: tempNoise,
-            parkingSpot: tempParkingSpot,
-            cleanliness: tempCleanliness,
-            cook: tempCook,
-            drugs: tempDrugs,
-            people_over: tempPeopleOver,
-            clothes: tempClothes,
-            utilities: tempUtilities,
+    // material UI
+    const useStyles = makeStyles({
+        root: {
+            margin: "auto",
+            width: 300,
         },
-        validationSchema: Yup.object({
-            firstName: Yup.string()
-              .min(2, "Mininum 2 characters")
-              .max(20, "Maximum 15 characters")
-              .required("Required!"),
-            lastName: Yup.string()
-              .min(2, "Mininum 2 characters")
-              .max(20, "Maximum 15 characters")
-              .required("Required!"),
-            email: Yup.string()
-              .email("Invalid email format")
-              .required("Required!"),
-            location: Yup.string()
-              .min(2, "Minimum 2 characters")
-              .required("Required!"),
-          }),
-        onSubmit: values => {
-            console.log(values)
-            db.collection("user-tests").doc(identifier).update(
-                values
-            )
-          }
-        });
+      });
 
+    // Items we are changing
+    const [items, setItems] = useState([]);
 
-    // get User ID from firebase
-
+    // Gets firebase data once after every render
+    useEffect(() => {
+        const getData = async () => {
+            docRef.get().then((items) => {
+                const docData = items.data();
+                setItems(docData);
+            })
+        }
+        getData();
+    }, []);
 
     // handlers
-    function handleFirstnameChange () {
-        db.collection('users-tests').doc(identifier)
+    function handleBioChange (e) {
+        docRef.update({
+            bio: e.target.value
+        })
     }
 
-    console.log(formik.values)
+    // material-UI
+    const classes = useStyles();
+    function valuetext(value) {
+        return `${value}`;
+      }
+
     return (
         <div className="App">
-            <h1>shit</h1>
-
-            <form onSubmit={formik.handleSubmit}>
-                <div>
-                    <TextField
-                        label='First Name'
-                        variant='outlined'
-                        type="text"
-                        name="firstName"
-                        value={formik.values.firstName}
-                        onChange={formik.handleChange}
-                        onBlur={handleFirstnameChange}
-                    />
-                    {formik.errors.firstName && formik.touched.firstName && (
-                        <p>{formik.errors.firstName}</p>
-                    )}
-                </div>
+            <form>
+                <p>Your bio! Tell others about you!</p>
+                <textarea id="bio" name="bio" rows="4" cols="50" onBlur={handleBioChange} />
+                <p>Do you smoke?</p>
+                <input type='radio' id='yes' name='smoke' value='1' onChange={(e) => {docRef.update({smoking:e.target.value})}}/>
+                <label for='yes'>Yes</label>
+                <input type='radio' id='no' name='smoke' value='-1' onChange={(e) => {docRef.update({smoking:e.target.value})}}/>
+                <label for='no'>No</label>
                 <br/>
 
-                <div>
-                    <TextField
-                        label='Last Name'
-                        variant='outlined'
-                        type="text"
-                        name="lastName"
-                        value={formik.values.lastName}
-                        onChange={formik.handleChange}
-                    />
-                    {formik.errors.lastName && formik.touched.lastName && (
-                        <p>{formik.errors.lastName}</p>
-                    )}
-                </div>
+                <p>Do you drink?</p>
+                <input type='radio' id='yes' name='drink' value='1' onChange={(e) => {docRef.update({drinking:e.target.value})}}/>
+                <label for='yes'>Yes</label>
+                <input type='radio' id='no' name='drink' value='-1' onChange={(e) => {docRef.update({drinking:e.target.value})}}/>
+                <label for='no'>No</label>
                 <br/>
 
-                <div>
-                    <TextField
-                        label="Email"
-                        variant='outlined'
-                        type="email"
-                        name="email"
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
+                <div className={classes.root}>
+                    <Typography id="discrete-slider" gutterBottom>
+                        How noisy are you?
+                    </Typography>
+                    <Slider
+                        defaultValue={5}
+                        getAriaValueText={valuetext}
+                        aria-labelledby="discrete-slider"
+                        valueLabelDisplay="auto"
+                        step={1}
+                        marks
+                        min={1}
+                        max={10}
+                        // onChange={(e) => {docRef.update({noise: e.value})}}
                     />
-                    {formik.errors.email && formik.touched.email && (
-                        <p>{formik.errors.email}</p>
-                    )}
-                </div>
-                <br/>
-
-                <div>
-                    <TextField
-                        label='Location'
-                        variant='outlined'
-                        type="text"
-                        name="location"
-                        value={formik.values.location}
-                        onChange={formik.handleChange}
+                    <br/>
+                    <Typography id="cleanliness" gutterBottom>
+                        How clean are you?
+                    </Typography>
+                    <Slider
+                        defaultValue={5}
+                        getAriaValueText={valuetext}
+                        aria-labelledby="cleanliness"
+                        valueLabelDisplay="auto"
+                        step={1}
+                        marks
+                        min={1}
+                        max={10}
+                        // onChange={(e) => {docRef.update({cleanliness: e.target.value})}}
                     />
-                    {formik.errors.location && formik.touched.location && (
-                        <p>{formik.errors.location}</p>
-                    )}
-                </div>
-                <br/>
-
-                <div>
-                    <Button type="submit" variant='contained' color='primary'>Submit</Button>
+                    <br/>
                 </div>
             </form>
         </div>
-      );
+    )
 }
