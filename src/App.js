@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-<<<<<<< HEAD
 // import {BrowserRouter as Router, Switch,Route} from 'react-router-dom' ;
 // import AccountPage from './Components/Register';
 import Dashboard from './HomePage/Dashboard';
@@ -12,14 +11,7 @@ import {
     Switch,
     Route,
   } from "react-router-dom";
-import AccountPage from './Components/AccountPage';
-=======
-import {BrowserRouter as Router, Switch,Route} from 'react-router-dom' ;
-import AccountPage from './Components/Register';
-import Dashboard from './HomePage/Dashboard';
-import Navbar from './HomePage/Navbar';
-import Footer from './HomePage/Footer';
->>>>>>> aca32bfa37c12fda9b86b07505a8964f7d387ea8
+import AccountPage from './Components/AccountPage'
 
 function App() {
   return (
@@ -32,11 +24,6 @@ function App() {
       </Switch>
     </Router>
     <Footer />
-<<<<<<< HEAD
-        {/* <AccountPage /> */}
-=======
-        <AccountPage />
->>>>>>> aca32bfa37c12fda9b86b07505a8964f7d387ea8
     </div>
   );
 }

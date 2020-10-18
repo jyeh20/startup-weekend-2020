@@ -1,0 +1,10 @@
+.left-half{
+    float: left;
+    width: 75%;
+  }
+  
+  .right-half{
+    /* border: 1rem; */
+    float: left;
+    width: 125%;
+  }

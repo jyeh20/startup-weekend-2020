@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .App-logo {
@@ -45,6 +45,16 @@ label{
 
 .App-link {
   color: #61dafb;
+}
+.left-half{
+  float: left;
+  width: 75%;
+}
+
+.right-half{
+  border: 1rem;
+  float: right;
+  width: 25%;
 }
 
 @keyframes App-logo-spin {

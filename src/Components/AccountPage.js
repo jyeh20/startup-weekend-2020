@@ -45,7 +45,7 @@ export default function AccountPage () {
     }
 
     return (
-        <div className="App">
+        <div style={{marginTop:'0rem'}}>
             <h1>Registration</h1>
 
             <form onSubmit={formik.handleSubmit}>
