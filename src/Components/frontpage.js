@@ -7,7 +7,7 @@ import firebase from '../firebase';
 
 let db = firebase.firestore();
 
-export default function Register () {
+export default function FirstUser () {
 
     const formik = useFormik({
         initialValues: {
@@ -15,6 +15,17 @@ export default function Register () {
             lastName: '',
             email: '',
             location: '',
+            ID: newID(),
+            smoking: null,
+            drinking: null,
+            noise: null,
+            car: null,
+            cleanliness: null,
+            cook: null,
+            drugs: null,
+            people_over: null,
+            clothes: null,
+            utilities: null
         },
         validationSchema: Yup.object({
             firstName: Yup.string()
@@ -34,11 +45,25 @@ export default function Register () {
           }),
         onSubmit: values => {
             console.log(values)
-            db.collection("user-tests").doc().set(
+            db.collection("user-tests").doc(formik.values.ID).set(
                 values
             )
           }
         });
+
+    // new ID for searching to make editing easier
+    function newID() {
+        const db = firebase.database();
+        let ref = db.ref("events");
+        let newPostRef = ref.push();
+        let newID = newPostRef.key.slice(9, 14);
+        return newID;
+        }
+
+    // handlers
+    function handleFirstnameChange () {
+        db.collection('users-tests').doc()
+    }
 
     return (
         <div className="App">
@@ -53,6 +78,7 @@ export default function Register () {
                         name="firstName"
                         value={formik.values.firstName}
                         onChange={formik.handleChange}
+                        onBlur={handleFirstnameChange}
                     />
                     {formik.errors.firstName && formik.touched.firstName && (
                         <p>{formik.errors.firstName}</p>

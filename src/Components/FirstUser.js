@@ -16,16 +16,18 @@ export default function FirstUser () {
             email: '',
             location: '',
             ID: newID(),
+            // Details per person
             smoking: null,
             drinking: null,
             noise: null,
-            car: null,
+            parkingSpot: null,
             cleanliness: null,
             cook: null,
             drugs: null,
-            people_over: null,
+            peopleOver: null,
             clothes: null,
             utilities: null
+            // Preferences
         },
         validationSchema: Yup.object({
             firstName: Yup.string()

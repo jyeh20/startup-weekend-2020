@@ -19,7 +19,7 @@ export default function AccountPage () {
     let tempSmoking = null;
     let tempDrinking = null;
     let tempNoise = null;
-    let tempCar = null;
+    let tempParkingSpot = null;
     let tempCleanliness = null;
     let tempCook = null;
     let tempDrugs = null;
@@ -36,7 +36,7 @@ export default function AccountPage () {
                 tempSmoking = doc.data().smoking;
                 tempDrinking = doc.data().drinking;
                 tempNoise =  doc.data().noise;
-                tempCar = doc.data().car;
+                tempParkingSpot = doc.data().parkingSpot;
                 tempCleanliness = doc.data().cleanliness;
                 tempCook = doc.data().cook;
                 tempDrugs = doc.data().drugs;
@@ -53,13 +53,22 @@ export default function AccountPage () {
     [])
 
     const formik = useFormik({
-        initialValues: {
-            firstName: tempFirstName,
+        initialValues:
+        {
+            firstName: docRef.get().then(function(doc) {
+                if(doc.exists) {
+                    return doc.data().firstName
+                } else {
+                    console.log("error")
+                }
+            }).catch(function(error) {
+                console.log("error", error);
+            }),
             lastName: tempLastName,
             smoking: tempSmoking,
             drinking: tempDrinking,
             noise: tempNoise,
-            car: tempCar,
+            parkingSpot: tempParkingSpot,
             cleanliness: tempCleanliness,
             cook: tempCook,
             drugs: tempDrugs,
@@ -103,7 +112,7 @@ export default function AccountPage () {
     console.log(formik.values)
     return (
         <div className="App">
-            <h1>{formik.values.firstName}</h1>
+            <h1>shit</h1>
 
             <form onSubmit={formik.handleSubmit}>
                 <div>
